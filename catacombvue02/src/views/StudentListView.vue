@@ -2,8 +2,10 @@
 import { ref, onMounted } from 'vue'
 import StudentService from '@/services/StudentService'
 import type { Student } from '@/student'
+import { useRouter } from 'vue-router'
 
 const students = ref<Student[] | null>(null)
+const router = useRouter()
 
 onMounted(() => {
   StudentService.getStudents()
@@ -12,6 +14,7 @@ onMounted(() => {
     })
     .catch((error) => {
       console.error('Error fetching students:', error)
+      router.push({ name: 'network-error-view' })
     })
 })
 </script>
