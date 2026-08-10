@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue'
 import EventService from '@/services/EventService'
 import type { Event } from '@/types'
+import { useRouter } from 'vue-router'
 
 const props = defineProps({
   id: {
@@ -11,6 +12,7 @@ const props = defineProps({
 })
 
 const event = ref<Event | null>(null)
+const router = useRouter()
 
 onMounted(() => {
   EventService.getEvent(Number(props.id))
@@ -19,6 +21,10 @@ onMounted(() => {
     })
     .catch((error) => {
       console.error('There was an error!', error)
+      router.push({
+        name: '404-resource-view',
+        params: { resource: 'event' }
+      })
     })
 })
 </script>
@@ -27,7 +33,6 @@ onMounted(() => {
   <div v-if="event">
     <h1>{{ event.title }}</h1>
     <nav>
-      <!-- เอา params: { id } ออก เพราะ Router จะจัดการให้อัตโนมัติใน Nested Route -->
       <RouterLink :to="{ name: 'event-detail-view' }">Details</RouterLink> |
       <RouterLink :to="{ name: 'event-register-view' }">Register</RouterLink> |
       <RouterLink :to="{ name: 'event-edit-view' }">Edit</RouterLink>
