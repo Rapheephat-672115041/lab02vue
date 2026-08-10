@@ -8,7 +8,7 @@ import { useRouter } from 'vue-router'
 const events = ref<Event[] | null>(null)
 const totalEvents = ref<number>(0)
   const hasNextPage = computed(() => {
-    const totalPages = Math.ceil(totalEvents.value / perPage.value)
+    const totalPages = Math.ceil(totalEvents.value / 3)
     return page.value < totalPages
   })
 
@@ -18,14 +18,13 @@ const props = defineProps({
 })
 
 const page = computed(() => props.page)
-const perPage = computed(() => props.size)
+// const perPage = computed(() => props.size)
 
 const router = useRouter()
 
 onMounted(() => {
   watchEffect(() => {
-    events.value = null
-    EventService.getEvents(perPage.value, page.value)
+    EventService.getEvents(3, page.value)
     .then((response) => {
       events.value = response.data
       totalEvents.value = response.headers['x-total-count']
@@ -40,10 +39,10 @@ onMounted(() => {
 
 <template>
   <h1>Events For Good</h1>
-  <div class="size-selector">
+  <!-- <div class="size-selector">
     <RouterLink :to="{ name: 'event-list-view', query: { page: 1, size: 2 } }">2 per page</RouterLink> |
     <RouterLink :to="{ name: 'event-list-view', query: { page: 1, size: 4 } }">4 per page</RouterLink>
-  </div>
+  </div> -->
   <div class="events">
     <EventCard v-for="event in events" :key="event.id" :event="event"/>
     <!-- <EventDetails v-for="event in events" :key="event.category + event.organizer" :event="event"/> -->
