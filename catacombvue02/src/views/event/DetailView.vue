@@ -8,7 +8,7 @@ defineProps<{
 
 <template>
   <div v-if="event">
-    <p>{{ event.time }} on {{ event.date }} @ {{ event.location }}[cite: 8]</p>
-    <p>{{ event.description }}[cite: 8]</p>
+    <p>{{ event.time }} on {{ event.date }} @ {{ event.location }}</p>
+    <p>{{ event.description }}</p>
   </div>
 </template>
