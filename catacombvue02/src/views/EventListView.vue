@@ -43,7 +43,7 @@ onMounted(() => {
     <RouterLink :to="{ name: 'event-list-view', query: { page: 1, size: 2 } }">2 per page</RouterLink> |
     <RouterLink :to="{ name: 'event-list-view', query: { page: 1, size: 4 } }">4 per page</RouterLink>
   </div> -->
-  <div class="events">
+  <div class="flex flex-col items-center">
     <EventCard v-for="event in events" :key="event.id" :event="event"/>
     <!-- <EventDetails v-for="event in events" :key="event.category + event.organizer" :event="event"/> -->
     <div class="pagination">
